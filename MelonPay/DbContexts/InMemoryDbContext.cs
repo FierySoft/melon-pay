@@ -17,7 +17,8 @@ namespace MelonPay.DbContexts
         {
             new InvoiceStatus { Id = 1, Code = "New", Name = "Новый" },
             new InvoiceStatus { Id = 2, Code = "Declined", Name = "Отклонен" },
-            new InvoiceStatus { Id = 3, Code = "Payed", Name = "Оплачен" }
+            new InvoiceStatus { Id = 3, Code = "Payed", Name = "Оплачен" },
+            new InvoiceStatus { Id = 4, Code = "Error", Name = "Ошибка" }
         };
 
         public ICollection<CardHolder> CardHolders = new List<CardHolder>()

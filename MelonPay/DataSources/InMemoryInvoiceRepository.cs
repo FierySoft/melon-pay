@@ -61,5 +61,77 @@ namespace MelonPay.DataSources
             // TODO: add permissions check
             return Task.FromResult(invoice);
         }
+
+        public Task<Invoice> CreateAsync(int fromWalletId, int toWalletId, decimal amount, string comment = null)
+        {
+            var status = _db.InvoiceStatuses.First(x => x.Code == "New");
+
+            var invoice = new Invoice
+            {
+                Id = _db.Wallets.Count() > 0 ? _db.Accounts.Last().Id + 1 : 1,
+                FromWalletId = fromWalletId,
+                ToWalletId = toWalletId,
+                Amount = amount,
+                Comment = comment,
+                StatusId = status.Id,
+                Status = status,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _db.Invoices.Add(invoice);
+            return Task.FromResult(invoice);
+        }
+
+        public async Task<Invoice> PayAsync(int id)
+        {
+            var invoice = _db.Invoices.First(x => x.Id == id);
+
+            // ACID transaction
+            var result = await TransactionAsync(invoice.FromWalletId, invoice.ToWalletId, invoice.Amount);
+
+            if (result.Success)
+            {
+                var status = _db.InvoiceStatuses.First(x => x.Code == "Payed");
+                invoice.StatusId = status.Id;
+                invoice.Status = status;
+                invoice.Reason = "Ok";
+
+                return invoice;
+            }
+            else
+            {
+                var status = _db.InvoiceStatuses.First(x => x.Code == "Error");
+                invoice.StatusId = status.Id;
+                invoice.Status = status;
+                invoice.Reason = result.ErrorReason;
+
+                return invoice;
+            }
+        }
+
+        public Task<Invoice> DeclineAsync(int id)
+        {
+            var invoice = _db.Invoices.First(x => x.Id == id);
+            var status = _db.InvoiceStatuses.First(x => x.Code == "Declined");
+            invoice.StatusId = status.Id;
+            invoice.Status = status;
+            return Task.FromResult(invoice);
+        }
+
+
+        private async Task<TransactionResult> TransactionAsync(int fromWalletId, int toWalletId, decimal amount)
+        {
+            try
+            {
+                await _wallets.ReduceAmountAsync(fromWalletId, amount);
+            }
+            catch (Exception ex)
+            {
+                return TransactionResult.FromException(ex);
+            }
+
+            await _wallets.AddAmountAsync(toWalletId, amount);
+            return TransactionResult.FromSuccess();
+        }
     }
 }

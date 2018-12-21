@@ -17,5 +17,6 @@ namespace MelonPay.Entities
 
         public int StatusId { get; set; }
         public InvoiceStatus Status { get; set; }
+        public string Reason { get; set; }
     }
 }

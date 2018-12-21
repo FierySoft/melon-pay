@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MelonPay.Controllers
 {
     using MelonPay.Abstractions;
+    using MelonPay.Models;
 
     [Route("api/[controller]")]
     public class InvoicesController : Controller
@@ -19,10 +17,37 @@ namespace MelonPay.Controllers
         }
 
 
-        [Route("{cardHolderId:int}")]
+        [HttpGet("{cardHolderId:int}")]
         public async Task<IActionResult> Index([FromRoute]int cardHolderId)
         {
             return Ok(await _invoices.GetByCardHolderIdAsync(cardHolderId));
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody]InvoiceCreate invoice)
+        {
+            return Ok(await _invoices.CreateAsync(invoice.FromWalletId, invoice.ToWalletId, invoice.Amount, invoice.Comment));
+        }
+
+        [HttpPost("pay/{id:int}")]
+        public async Task<IActionResult> Pay([FromRoute]int id)
+        {
+            var result = await _invoices.PayAsync(id);
+
+            if (result.Status.Code == "Payed")
+            {
+                return Ok(result.Status);
+            }
+            else
+            {
+                return BadRequest(result.Status);
+            }
+        }
+
+        [HttpPost("decline/{id:int}")]
+        public async Task<IActionResult> Decline([FromRoute]int id)
+        {
+            return Ok(await _invoices.DeclineAsync(id));
         }
     }
 }
