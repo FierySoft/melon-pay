@@ -7,11 +7,11 @@ using MelonPay.Entities;
 
 namespace MelonPay.DataSources
 {
-    public class InMemoryWalletsRepository : IWalletRepository
+    public class InMemoryWalletRepository : IWalletRepository
     {
         private readonly InMemoryDbContext _db;
 
-        public InMemoryWalletsRepository(InMemoryDbContext context)
+        public InMemoryWalletRepository(InMemoryDbContext context)
         {
             _db = context;
         }
@@ -27,6 +27,7 @@ namespace MelonPay.DataSources
         public Task<WalletPrivate> GetByIdAsync(int id)
         {
             var model = _db.Wallets.First(x => x.Id == id);
+            model.Currency = _db.Currencies.First(x => x.Id == model.CurrencyId);
             model.CardHolder = _db.CardHolders.FirstOrDefault(p => p.Id == model.CardHolderId);
 
             return Task.FromResult(model);

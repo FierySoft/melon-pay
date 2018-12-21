@@ -25,8 +25,25 @@ namespace MelonPay.DataSources
         public async Task<InvoicesReport> GetByCardHolderIdAsync(int cardHolderId)
         {
             var cardHolder = await _cardHolders.GetByIdAsync(cardHolderId);
+
             var sended = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.FromWalletId)).ToArray();
+                /*await Task.WhenAll(_db.Invoices
+                .Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.FromWalletId))
+                .Select(async x =>
+                {
+                    x.FromWallet = await _wallets.GetByIdAsync(x.FromWalletId);
+                    x.ToWallet = await _wallets.GetByIdAsync(x.ToWalletId);
+                    return x;
+                }));*/
+
             var received = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.ToWalletId)).ToArray();
+                /*await Task.WhenAll(_db.Invoices
+                .Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.ToWalletId))
+                .Select(async x => {
+                    x.FromWallet = await _wallets.GetByIdAsync(x.FromWalletId);
+                    x.ToWallet = await _wallets.GetByIdAsync(x.ToWalletId);
+                    return x;
+                }));*/
 
             return new InvoicesReport
             {
