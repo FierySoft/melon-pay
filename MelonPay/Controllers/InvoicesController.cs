@@ -6,12 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MelonPay.Controllers
 {
+    using MelonPay.Abstractions;
+
+    [Route("api/[controller]")]
     public class InvoicesController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        private readonly IInvoiceRepository _invoices;
+
+        public InvoicesController(IInvoiceRepository invoices)
         {
-            return View();
+            _invoices = invoices;
+        }
+
+
+        [Route("{cardHolderId:int}")]
+        public async Task<IActionResult> Index([FromRoute]int cardHolderId)
+        {
+            return Ok(await _invoices.GetByCardHolderIdAsync(cardHolderId));
         }
     }
 }
