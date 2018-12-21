@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MelonPay.Models
+namespace MelonPay.Entities
 {
     public class Invoice
     {

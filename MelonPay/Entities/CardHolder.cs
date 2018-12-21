@@ -1,4 +1,6 @@
-﻿namespace MelonPay.Models
+﻿using System.Collections.Generic;
+
+namespace MelonPay.Entities
 {
     public class CardHolder
     {
@@ -7,7 +9,8 @@
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public Gender? Gender { get; set; }
-        public Wallet[] Wallets { get; set; }
+        public bool IsDeleted { get; set; }
+        public IEnumerable<Wallet> Wallets { get; set; }
     }
 
     public enum Gender

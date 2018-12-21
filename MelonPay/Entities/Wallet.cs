@@ -1,4 +1,4 @@
-﻿namespace MelonPay.Models
+﻿namespace MelonPay.Entities
 {
     public class Wallet
     {
@@ -12,5 +12,6 @@
     public class WalletPrivate : Wallet
     {
         public decimal Balance { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

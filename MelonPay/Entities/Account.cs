@@ -1,4 +1,6 @@
-﻿namespace MelonPay.Models
+﻿using System;
+
+namespace MelonPay.Entities
 {
     public class Account
     {
@@ -7,5 +9,7 @@
         public string Password { get; set; }
         public int CardHolderId { get; set; }
         public CardHolder CardHolder { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
