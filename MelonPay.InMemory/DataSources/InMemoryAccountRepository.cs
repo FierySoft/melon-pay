@@ -35,14 +35,15 @@ namespace MelonPay.InMemory.DataSources
 
         public Task<Account> CreateAsync(Account model)
         {
+            model.CardHolder.Id = _db.CardHolders.Count() > 0 ? _db.CardHolders.Last().Id + 1 : 1;
+            model.CardHolder.IsDeleted = false;
+            _db.CardHolders.Add(model.CardHolder);
+
             model.Id = _db.Accounts.Count() > 0 ? _db.Accounts.Last().Id + 1 : 1;
+            model.CardHolderId = model.CardHolder.Id;
             model.CreatedAt = DateTime.UtcNow;
             model.IsDeleted = false;
             _db.Accounts.Add(model);
-
-            model.CardHolderId = _db.CardHolders.Count() > 0 ? _db.CardHolders.Last().Id + 1 : 1;
-            model.CardHolder.IsDeleted = false;
-            _db.CardHolders.Add(model.CardHolder);
 
             var wallet = new WalletPrivate
             {
@@ -88,7 +89,7 @@ namespace MelonPay.InMemory.DataSources
         public Task DeleteAsync(Account model)
         {
             var wallets = _db.Wallets.Where(x => x.CardHolderId == model.CardHolderId);
-            wallets.Select(x => x.IsDeleted = true);
+            wallets.Select(x => x.IsDeleted == true);
 
             var cardHolder = _db.CardHolders.FirstOrDefault(p => p.Id == model.CardHolderId);
             cardHolder.IsDeleted = true;
