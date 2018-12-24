@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MelonPay.Entities;
+using MelonPay.Common.Entities;
 
-namespace MelonPay.DbContexts
+namespace MelonPay.InMemory.DbContexts
 {
     public class InMemoryDbContext
     {

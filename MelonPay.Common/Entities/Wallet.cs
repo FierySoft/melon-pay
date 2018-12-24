@@ -1,4 +1,4 @@
-﻿namespace MelonPay.Entities
+﻿namespace MelonPay.Common.Entities
 {
     public class Wallet
     {

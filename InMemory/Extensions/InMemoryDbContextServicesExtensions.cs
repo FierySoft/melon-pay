@@ -1,7 +1,7 @@
-﻿using MelonPay.Abstractions;
-using MelonPay.DataSources;
-using MelonPay.DbContexts;
-using MelonPay.Entities;
+﻿using MelonPay.Common.Entities;
+using MelonPay.Common.Abstractions;
+using MelonPay.InMemory.DbContexts;
+using MelonPay.InMemory.DataSources;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

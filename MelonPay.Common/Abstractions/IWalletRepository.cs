@@ -1,7 +1,7 @@
-﻿using MelonPay.Entities;
+﻿using MelonPay.Common.Entities;
 using System.Threading.Tasks;
 
-namespace MelonPay.Abstractions
+namespace MelonPay.Common.Abstractions
 {
     public interface IWalletRepository : ICatalogueRepository<WalletPrivate>
     {

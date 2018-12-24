@@ -1,4 +1,4 @@
-﻿namespace MelonPay.Models
+﻿namespace MelonPay.Common.Models
 {
     public class InvoiceCreate
     {

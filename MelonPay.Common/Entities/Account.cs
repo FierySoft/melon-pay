@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MelonPay.Entities
+namespace MelonPay.Common.Entities
 {
     public class Account
     {

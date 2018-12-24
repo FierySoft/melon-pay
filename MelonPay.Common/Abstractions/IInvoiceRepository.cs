@@ -1,8 +1,8 @@
-﻿using MelonPay.Models;
-using MelonPay.Entities;
+﻿using MelonPay.Common.Models;
+using MelonPay.Common.Entities;
 using System.Threading.Tasks;
 
-namespace MelonPay.Abstractions
+namespace MelonPay.Common.Abstractions
 {
     public interface IInvoiceRepository
     {

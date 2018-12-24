@@ -1,6 +1,6 @@
-﻿using MelonPay.Entities;
+﻿using MelonPay.Common.Entities;
 
-namespace MelonPay.Models
+namespace MelonPay.Common.Models
 {
     public class InvoicesReport
     {

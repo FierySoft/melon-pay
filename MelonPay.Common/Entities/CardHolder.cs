@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MelonPay.Entities
+namespace MelonPay.Common.Entities
 {
     public class CardHolder
     {

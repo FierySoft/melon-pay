@@ -1,6 +1,6 @@
-﻿using MelonPay.Entities;
+﻿using MelonPay.Common.Entities;
 
-namespace MelonPay.Abstractions
+namespace MelonPay.Common.Abstractions
 {
     public interface ICardHolderRepository : ICatalogueRepository<CardHolder>
     {

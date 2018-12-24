@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MelonPay.Controllers
 {
-    using MelonPay.Abstractions;
-    using MelonPay.Models;
+    using MelonPay.Common.Abstractions;
+    using MelonPay.Common.Models;
 
     [Route("api/[controller]")]
     public class InvoicesController : Controller

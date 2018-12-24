@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MelonPay.Abstractions;
-using MelonPay.DbContexts;
-using MelonPay.Entities;
+using MelonPay.Common.Entities;
+using MelonPay.Common.Abstractions;
+using MelonPay.InMemory.DbContexts;
 
-namespace MelonPay.DataSources
+namespace MelonPay.InMemory.DataSources
 {
     public class InMemoryAccountsRepository : ICatalogueRepository<Account>
     {

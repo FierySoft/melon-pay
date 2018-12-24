@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MelonPay.Models
+namespace MelonPay.Common.Models
 {
     public class TransactionResult
     {

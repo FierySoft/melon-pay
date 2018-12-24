@@ -10,4 +10,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataSources\" />
+    <Folder Include="DbContexts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InMemory\MelonPay.InMemory.csproj" />
+    <ProjectReference Include="..\MelonPay.Common\MelonPay.Common.csproj" />
+  </ItemGroup>
+
 </Project>

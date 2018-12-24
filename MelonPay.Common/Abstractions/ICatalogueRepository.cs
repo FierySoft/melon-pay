@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MelonPay.Abstractions
+namespace MelonPay.Common.Abstractions
 {
     public interface ICatalogueRepository<T>
     {
