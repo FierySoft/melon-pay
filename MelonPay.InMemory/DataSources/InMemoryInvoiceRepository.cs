@@ -26,7 +26,7 @@ namespace MelonPay.InMemory.DataSources
         {
             var cardHolder = await _cardHolders.GetByIdAsync(cardHolderId);
 
-            var sended = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.FromWalletId)).ToArray();
+            var sended = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.FromWalletId.Value)).ToArray();
                 /*await Task.WhenAll(_db.Invoices
                 .Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.FromWalletId))
                 .Select(async x =>
@@ -36,7 +36,7 @@ namespace MelonPay.InMemory.DataSources
                     return x;
                 }));*/
 
-            var received = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.ToWalletId)).ToArray();
+            var received = _db.Invoices.Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.ToWalletId.Value)).ToArray();
                 /*await Task.WhenAll(_db.Invoices
                 .Where(x => cardHolder.Wallets.Select(w => w.Id).Contains(x.ToWalletId))
                 .Select(async x => {
@@ -87,7 +87,7 @@ namespace MelonPay.InMemory.DataSources
             var invoice = _db.Invoices.First(x => x.Id == id);
 
             // ACID transaction
-            var result = await TransactionAsync(invoice.FromWalletId, invoice.ToWalletId, invoice.Amount);
+            var result = await TransactionAsync(invoice.FromWalletId.Value, invoice.ToWalletId.Value, invoice.Amount);
 
             if (result.Success)
             {

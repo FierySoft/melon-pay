@@ -14,12 +14,12 @@
 
   <ItemGroup>
     <Folder Include="DataSources\" />
-    <Folder Include="DbContexts\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MelonPay.Common\MelonPay.Common.csproj" />
     <ProjectReference Include="..\MelonPay.InMemory\MelonPay.InMemory.csproj" />
+    <ProjectReference Include="..\MelonPay.PersistentDb\MelonPay.PersistentDb.csproj" />
   </ItemGroup>
 
 </Project>

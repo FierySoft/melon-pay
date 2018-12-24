@@ -9,10 +9,10 @@ namespace MelonPay.Common.Entities
         public string Comment { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public int FromWalletId { get; set; }
+        public int? FromWalletId { get; set; }
         public Wallet FromWallet { get; set; }
 
-        public int ToWalletId { get; set; }
+        public int? ToWalletId { get; set; }
         public Wallet ToWallet { get; set; }
 
         public int StatusId { get; set; }
