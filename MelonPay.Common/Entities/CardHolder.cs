@@ -11,6 +11,8 @@ namespace MelonPay.Common.Entities
         public Gender? Gender { get; set; }
         public bool IsDeleted { get; set; }
         public IEnumerable<Wallet> Wallets { get; set; }
+
+        public string FullName => $"{FirstName} {MiddleName} {LastName}";
     }
 
     public enum Gender

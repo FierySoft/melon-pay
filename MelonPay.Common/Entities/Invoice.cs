@@ -13,7 +13,7 @@ namespace MelonPay.Common.Entities
         public Wallet FromWallet { get; set; }
 
         public int? ToWalletId { get; set; }
-        public Wallet ToWallet { get; set; }
+        public WalletPrivate ToWallet { get; set; }
 
         public int StatusId { get; set; }
         public InvoiceStatus Status { get; set; }

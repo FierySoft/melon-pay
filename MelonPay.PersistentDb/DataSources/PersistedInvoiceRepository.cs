@@ -31,7 +31,9 @@ namespace MelonPay.PersistentDb.DataSources
             var query = _db.Invoices
                 .AsNoTracking()
                 .Include(x => x.FromWallet)
+                .ThenInclude(x => x.Currency)
                 .Include(x => x.ToWallet)
+                .ThenInclude(x => x.Currency)
                 .Include(X => X.Status);
 
             var sended = await query.Where(x => cardHolder.Wallets
