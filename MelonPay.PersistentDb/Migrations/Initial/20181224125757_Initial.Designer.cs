@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MelonPay.PersistentDb.Migrations
+namespace MelonPay.PersistentDb.Migrations.Initial
 {
     [DbContext(typeof(MelonPayDbContext))]
-    [Migration("20181224121009_Initial")]
+    [Migration("20181224125757_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MelonPay.PersistentDb.Migrations
+namespace MelonPay.PersistentDb.Migrations.Initial
 {
     [DbContext(typeof(MelonPayDbContext))]
     partial class MelonPayDbContextModelSnapshot : ModelSnapshot

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MelonPay.PersistentDb.Migrations
+namespace MelonPay.PersistentDb.Migrations.Initial
 {
     public partial class Initial : Migration
     {
