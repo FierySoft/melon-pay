@@ -1,1 +1,28 @@
-<h2>App works!</h2>
+<div class="container">
+    <h3>Пользователи</h3>
+    <ul>
+        <li *ngFor="let ch of cardHolders$ | async" (click)="select(ch.id)">
+            {{ ch.fullName }}
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="visible" class="panel panel-default">
+    <h4>Счета</h4>
+    <div *ngIf="invoices$ | async as invoices" class="panel-body">
+        <ul>
+            <li><b>Исходящие</b></li>
+            <li *ngIf="!invoices.sended?.length">Список пуст</li>
+            <li *ngFor="let sended of invoices.sended">
+                {{ sended.toWallet.id }} : {{ sended.toWallet.amount }} {{ sended.toWallet.currency.name }}
+            </li>
+        </ul>
+        <ul>
+            <li><b>Входящие</b></li>
+            <li *ngIf="!invoices.received?.length">Список пуст</li>
+            <li *ngFor="let sended of invoices.received">
+                {{ sended.fromWallet.id }} : {{ sended.fromWallet.amount }} {{ sended.fromWallet.currency.name }}
+            </li>
+        </ul>
+    </div>
+</div>
