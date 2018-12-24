@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MelonPay.Common.Entities;
@@ -25,13 +26,17 @@ namespace MelonPay.PersistentDb.DataSources
                 .ToArrayAsync();
         }
 
-        public Task<CardHolder> GetByIdAsync(int id)
+        public async Task<CardHolder> GetByIdAsync(int id)
         {
-            return _db.CardHolders
+            var value = await _db.CardHolders
                 .AsNoTracking()
                 .Include(x => x.Wallets)
                 .ThenInclude(x => x.Currency)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            Array.ForEach(value.Wallets.ToArray(), w => w.CardHolder = null);
+
+            return value;
         }
 
         public async Task<CardHolder> CreateAsync(CardHolder model)

@@ -47,7 +47,7 @@ namespace MelonPay.Api.Controllers
         [HttpPost("decline/{id:int}")]
         public async Task<IActionResult> Decline([FromRoute]int id)
         {
-            return Ok(await _invoices.DeclineAsync(id));
+            return Ok((await _invoices.DeclineAsync(id))?.Status);
         }
     }
 }
