@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <AssemblyName>MelonPay.Api</AssemblyName>
+    <RootNamespace>MelonPay.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InMemory\MelonPay.InMemory.csproj" />
     <ProjectReference Include="..\MelonPay.Common\MelonPay.Common.csproj" />
+    <ProjectReference Include="..\MelonPay.InMemory\MelonPay.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

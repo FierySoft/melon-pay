@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MelonPay.Controllers
+namespace MelonPay.Api.Controllers
 {
     using MelonPay.Common.Abstractions;
     using MelonPay.Common.Models;
