@@ -15,6 +15,7 @@ export class AppComponent {
     invoices$: Observable<InvoicesReport>;
 
     visible: boolean = false;
+    selectedId: number;
 
     constructor(private _api: ApiService) {
         this.cardHolders$ = this._api.getCardHolders();
@@ -23,6 +24,7 @@ export class AppComponent {
 
     select = (cardHolderId: number): Observable<InvoicesReport> => {
         this.visible = true;
+        this.selectedId = cardHolderId;
         return this.invoices$ = this._api.getInvoicesFor(cardHolderId);
     }
 }

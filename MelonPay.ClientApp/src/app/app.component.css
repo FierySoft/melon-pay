@@ -1,8 +1,29 @@
+h3 {
+    padding: 15px 0;
+}
+
 ul {
     list-style-type: none;
 }
 
-li {
+li.list-group-item {
     cursor: pointer;
-    margin: 10px 0;
+}
+
+li.selected {
+    background: #237cd4;
+    color: #fff;
+}
+
+li.empty {
+    color: #aaa;
+}
+
+small {
+    color: #aaa;
+}
+
+.text-header {
+    font-weight: bold;
+    color: #fff;
 }

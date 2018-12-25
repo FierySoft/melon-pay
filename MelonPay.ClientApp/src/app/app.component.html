@@ -1,28 +1,46 @@
 <div class="container">
-    <h3>Пользователи</h3>
-    <ul>
-        <li *ngFor="let ch of cardHolders$ | async" (click)="select(ch.id)">
-            {{ ch.fullName }}
-        </li>
-    </ul>
-</div>
+    <h3>
+        <i class="fa fa-exchange"></i>
+        MelonPay
+        <small>simple wallet-to-wallet payment system</small>
+    </h3>
 
-<div *ngIf="visible" class="panel panel-default">
-    <h4>Счета</h4>
-    <div *ngIf="invoices$ | async as invoices" class="panel-body">
-        <ul>
-            <li><b>Исходящие</b></li>
-            <li *ngIf="!invoices.sended?.length">Список пуст</li>
-            <li *ngFor="let sended of invoices.sended">
-                {{ sended.toWallet.id }} : {{ sended.toWallet.amount }} {{ sended.toWallet.currency.name }}
-            </li>
-        </ul>
-        <ul>
-            <li><b>Входящие</b></li>
-            <li *ngIf="!invoices.received?.length">Список пуст</li>
-            <li *ngFor="let sended of invoices.received">
-                {{ sended.fromWallet.id }} : {{ sended.fromWallet.amount }} {{ sended.fromWallet.currency.name }}
-            </li>
-        </ul>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li *ngFor="let ch of cardHolders$ | async"
+                    (click)="select(ch.id)"
+                    [class.selected]="selectedId === ch.id"
+                    class="list-group-item list-group-item-action">
+                    <i class="fa fa-user-o"></i>
+                    {{ ch.fullName }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <div *ngIf="visible" class="card border-primary">
+                <div class="card-header bg-primary text-header">
+                    <i class="fa fa-credit-card"></i>
+                    Счета
+                </div>
+                <div *ngIf="invoices$ | async as invoices" class="card-body">
+                    <ul>
+                        <li><i class="fa fa-arrow-circle-up text-danger"></i><b> Исходящие</b></li>
+                        <li *ngIf="!invoices.sended?.length" class="empty">Список пуст</li>
+                        <li *ngFor="let sended of invoices.sended">
+                            {{ sended.toWallet.id }} : {{ sended.toWallet.amount }} {{ sended.toWallet.currency.name }}
+                        </li>
+                    </ul>
+                    <ul>
+                        <li><i class="fa fa-arrow-circle-down text-success"></i><b> Входящие</b></li>
+                        <li *ngIf="!invoices.received?.length" class="empty">Список пуст</li>
+                        <li *ngFor="let sended of invoices.received">
+                            {{ sended.fromWallet.id }} : {{ sended.fromWallet.amount }} {{ sended.fromWallet.currency.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
