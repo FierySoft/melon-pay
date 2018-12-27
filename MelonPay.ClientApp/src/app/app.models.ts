@@ -1,7 +1,14 @@
 import { Observable } from 'rxjs';
 
-export interface IDelegate<T> {
-    (id: number): Observable<T>;
+export interface IDelegate<TIn, TOut> {
+    (param: TIn): Observable<TOut>;
+}
+
+export class UserAccount {
+    id: number;
+    userName: string;
+    cardHolderId: number;
+    cardHolder: CardHolder;
 }
 
 export class Currency {

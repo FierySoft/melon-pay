@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { CardHolder, InvoicesReport } from './app.models';
+import { UserAccount, CardHolder, InvoicesReport } from './app.models';
 
 @Component({
     selector: 'app-root',
@@ -10,19 +10,23 @@ import { CardHolder, InvoicesReport } from './app.models';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    cardHolders$: Observable<CardHolder[]>;
+    user: UserAccount;
     invoices$: Observable<InvoicesReport>;
 
     visible: boolean = false;
     selectedId: number;
 
     constructor(private _api: ApiService) {
-        this.cardHolders$ = this._api.getCardHolders();
+        this._api.whoAmI().subscribe(result => {
+            this.user = result;
+            this.invoices$ = this._api.getInvoicesFor(result.id);
+        });
     }
 
-    select = (cardHolderId: number): void => {
+    selectWallet = (walletId: number): void => {
+        if (!walletId) { return; }
         this.visible = true;
-        this.selectedId = cardHolderId;
-        this.invoices$ = this._api.getInvoicesFor(cardHolderId);
+        this.selectedId = walletId;
+        this.invoices$ = this._api.getInvoicesByWalletId(this.user.cardHolderId, walletId);
     }
 }

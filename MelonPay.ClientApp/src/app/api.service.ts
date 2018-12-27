@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { CardHolder, InvoicesReport, Invoice, InvoiceStatus, InvoiceCreate } from './app.models';
+import { UserAccount, CardHolder, InvoicesReport, Invoice, InvoiceStatus, InvoiceCreate } from './app.models';
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
@@ -15,6 +15,10 @@ export class ApiService {
         this._url = `${baseUrl}/api`;
     }
 
+
+    public whoAmI = (): Observable<UserAccount> =>
+        this._http.get<UserAccount>(`${this._url}/account`)
+
     public getCardHolders = (): Observable<CardHolder[]> =>
         this._http.get<CardHolder[]>(`${this._url}/cardholders`)
 
@@ -23,6 +27,9 @@ export class ApiService {
 
     public getInvoicesFor = (cardHolderId: number): Observable<InvoicesReport> =>
         this._http.get<InvoicesReport>(`${this._url}/invoices/${cardHolderId}`)
+
+    public getInvoicesByWalletId = (cardHolderId: number, walletId: number): Observable<InvoicesReport> =>
+        this._http.get<InvoicesReport>(`${this._url}/invoices/${cardHolderId}/${walletId}`)
 
     public createInvoice = (invoice: InvoiceCreate): Observable<Invoice> =>
         this._http.post<Invoice>(`${this._url}/invoices/create`, invoice)
