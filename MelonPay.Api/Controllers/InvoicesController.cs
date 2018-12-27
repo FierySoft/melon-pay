@@ -18,9 +18,15 @@ namespace MelonPay.Api.Controllers
 
 
         [HttpGet("{cardHolderId:int}")]
-        public async Task<IActionResult> Index([FromRoute]int cardHolderId)
+        public async Task<IActionResult> ByCardHolderId([FromRoute]int cardHolderId)
         {
             return Ok(await _invoices.GetByCardHolderIdAsync(cardHolderId));
+        }
+
+        [HttpGet("{cardHolderId:int}/{walletId:int}")]
+        public async Task<IActionResult> ByWalletId([FromRoute]int cardHolderId, [FromRoute]int walletId)
+        {
+            return Ok(await _invoices.GetByWalletIdAsync(cardHolderId, walletId));
         }
 
         [HttpPost("create")]
