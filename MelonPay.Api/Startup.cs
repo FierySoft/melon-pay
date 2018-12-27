@@ -27,8 +27,7 @@ namespace MelonPay.Api
         {
             services.AddCors(options =>
             {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
+                options.AddPolicy("spa-app", policy =>
                 {
                     policy.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
@@ -38,6 +37,7 @@ namespace MelonPay.Api
 
             //services.AddInMemoryServices();
             services.AddPersistedServices(Configuration);
+            services.AddTransient<Abstractions.IUserService, Services.MockUserService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -45,8 +45,7 @@ namespace MelonPay.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // this uses the policy called "default"
-            app.UseCors("default");
+            app.UseCors("spa-app");
 
             if (env.IsDevelopment())
             {
