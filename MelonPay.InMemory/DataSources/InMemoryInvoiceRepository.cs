@@ -54,6 +54,28 @@ namespace MelonPay.InMemory.DataSources
             };
         }
 
+        public async Task<InvoicesReport> GetByWalletIdAsync(int cardHolderId, int walletId)
+        {
+            var cardHolder = await _cardHolders.GetByIdAsync(cardHolderId);
+            var wallet = await _wallets.GetByIdAsync(walletId);
+
+            if (!cardHolder.Wallets.Select(x => x.Id).Contains(walletId))
+            {
+                throw new ArgumentException($"Wallet 3{walletId} does not belong to CardHolder 3{cardHolderId}");
+            }
+
+            var sended = _db.Invoices.Where(x => x.FromWalletId == walletId).ToArray();
+            var received = _db.Invoices.Where(x => x.ToWalletId == walletId).ToArray();
+
+            return new InvoicesReport
+            {
+                CardHolderId = cardHolderId,
+                CardHolder = cardHolder,
+                Sended = sended,
+                Received = received
+            };
+        }
+
         public Task<Invoice> ChangeStatusAsync(long invoiceId, int cardHolderId, InvoiceStatus status)
         {
             var invoice = _db.Invoices.FirstOrDefault(x => x.Id == invoiceId);
