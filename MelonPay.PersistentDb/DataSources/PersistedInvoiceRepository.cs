@@ -58,6 +58,8 @@ namespace MelonPay.PersistentDb.DataSources
         public async Task<InvoicesReport> GetByWalletIdAsync(int cardHolderId, int walletId)
         {
             var cardHolder = await _cardHolders.GetByIdAsync(cardHolderId);
+            cardHolder.Wallets = cardHolder.Wallets.Select(x => { x.CardHolder = null; return x; });
+
             var wallet = await _wallets.GetByIdAsync(walletId);
 
             if (!cardHolder.Wallets.Select(x => x.Id).Contains(walletId))
@@ -65,8 +67,16 @@ namespace MelonPay.PersistentDb.DataSources
                 throw new ArgumentException($"Wallet 3{walletId} does not belong to CardHolder 3{cardHolderId}");
             }
 
-            var sended = _db.Invoices.Where(x => x.FromWalletId == walletId).ToArray();
-            var received = _db.Invoices.Where(x => x.ToWalletId == walletId).ToArray();
+            var query = _db.Invoices
+                .AsNoTracking()
+                .Include(x => x.FromWallet)
+                .ThenInclude(x => x.Currency)
+                .Include(x => x.ToWallet)
+                .ThenInclude(x => x.Currency)
+                .Include(X => X.Status);
+
+            var sended = query.Where(x => x.FromWalletId == walletId).ToArray();
+            var received = query.Where(x => x.ToWalletId == walletId).ToArray();
 
             return new InvoicesReport
             {
