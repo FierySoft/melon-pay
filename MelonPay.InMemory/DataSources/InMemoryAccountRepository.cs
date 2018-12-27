@@ -7,7 +7,7 @@ using MelonPay.InMemory.DbContexts;
 
 namespace MelonPay.InMemory.DataSources
 {
-    public class InMemoryAccountsRepository : ICatalogueRepository<Account>
+    public class InMemoryAccountsRepository : IAccountRepository
     {
         private readonly InMemoryDbContext _db;
 
@@ -29,6 +29,7 @@ namespace MelonPay.InMemory.DataSources
             var model = _db.Accounts.First(x => x.Id == id);
             model.CardHolder = _db.CardHolders.FirstOrDefault(p => p.Id == model.CardHolderId);
             model.CardHolder.Wallets = _db.Wallets.Where(x => x.CardHolderId == model.CardHolderId);
+            model.CardHolder.Wallets.Select(w => w.Currency = _db.Currencies.First(c => c.Id == w.CurrencyId));
 
             return Task.FromResult(model);
         }

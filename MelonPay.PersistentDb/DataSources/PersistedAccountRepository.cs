@@ -8,7 +8,7 @@ using MelonPay.Persisted.DbContexts;
 
 namespace MelonPay.PersistentDb.DataSources
 {
-    class PersistedAccountRepository : ICatalogueRepository<Account>
+    class PersistedAccountRepository : IAccountRepository
     {
         private readonly MelonPayDbContext _db;
 
@@ -26,13 +26,18 @@ namespace MelonPay.PersistentDb.DataSources
                 .ToArrayAsync();
         }
 
-        public Task<Account> GetByIdAsync(int id)
+        public async Task<Account> GetByIdAsync(int id)
         {
-            return _db.Accounts
+            var value = await _db.Accounts
                 .AsNoTracking()
                 .Include(x => x.CardHolder)
                 .ThenInclude(x => x.Wallets)
+                .ThenInclude(x => x.Currency)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            Array.ForEach(value.CardHolder.Wallets.ToArray(), w => w.CardHolder = null);
+
+            return value;
         }
 
         public async Task<Account> CreateAsync(Account model)

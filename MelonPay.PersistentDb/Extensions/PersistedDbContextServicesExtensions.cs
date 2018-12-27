@@ -1,5 +1,4 @@
 ﻿using MelonPay.Common.Abstractions;
-using MelonPay.Common.Entities;
 using MelonPay.Persisted.DbContexts;
 using MelonPay.PersistentDb.DataSources;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             //services.Configure<MelonPayDbContextOptions>(configuration.GetSection("MelonPayDbContext"));
             services.AddDbContext<MelonPayDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<ICatalogueRepository<Account>, PersistedAccountRepository>();
+            services.AddTransient<IAccountRepository, PersistedAccountRepository>();
             services.AddTransient<ICardHolderRepository, PersistedCardHolderRepository>();
             services.AddTransient<IWalletRepository, PersistedWalletRepository>();
             services.AddTransient<IInvoiceRepository, PersistedInvoiceRepository>();
