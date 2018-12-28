@@ -64,7 +64,7 @@ namespace MelonPay.PersistentDb.DataSources
 
             if (!cardHolder.Wallets.Select(x => x.Id).Contains(walletId))
             {
-                throw new ArgumentException($"Wallet 3{walletId} does not belong to CardHolder 3{cardHolderId}");
+                throw new ArgumentException($"Wallet #{walletId} does not belong to CardHolder #{cardHolderId}");
             }
 
             var query = _db.Invoices
