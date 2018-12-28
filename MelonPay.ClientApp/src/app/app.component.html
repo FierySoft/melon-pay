@@ -1,10 +1,17 @@
-<ul class="nav justify-content-end">
-    <li class="nav-item dropdown">
+<ul *ngIf="users$ | async as users" class="nav justify-content-end">
+    <li class="nav-item" style="padding-top:10px"><i class="fa fa-2x fa-user-o"></i></li>
+    <li *ngIf="user$ | async as user" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" [title]="user.cardHolder?.fullName" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            {{ user.userName }}
+            <strong style="font-size:1.5em">{{ user.userName }}</strong>
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">{{ user.cardHolder?.fullName }}</a>
+            <a *ngFor="let u of users"
+                (click)="changeUser(u.id)"
+                [class.selected]="user.id === u.id"
+                class="dropdown-item"
+                href="#">
+                {{ u.cardHolder?.shortName }}
+            </a>
         </div>
     </li>
 </ul>
@@ -17,11 +24,11 @@
     </h3>
 
     <div class="row">
-        <div *ngIf="user" class="col-md-4">
+        <div *ngIf="user$ | async as user" class="col-md-4">
             <ul class="list-group">
                 <li *ngFor="let wallet of user.cardHolder.wallets"
                     (click)="selectWallet(wallet.id)"
-                    [class.selected]="selectedId === wallet.id"
+                    [class.selected]="selectedWalletId === wallet.id"
                     class="list-group-item list-group-item-action">
                     <i class="fa fa-credit-card"></i>
                     {{ wallet.currency.code }}{{ wallet.id }}
@@ -32,7 +39,7 @@
         </div>
 
         <div class="col-md-8">
-            <div *ngIf="visible" class="card border-primary">
+            <div *ngIf="walletsVisible" class="card border-primary">
                 <div class="card-header bg-primary text-header">
                     <i class="fa fa-file-o"></i>
                     Счета

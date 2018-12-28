@@ -28,6 +28,7 @@ export class CardHolder {
     middleName: string;
     lastName: string;
     fullName: string;
+    shortName: string;
     gender: Gender;
     isDeleted: boolean;
     wallets: Wallet[];

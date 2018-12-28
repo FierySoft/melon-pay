@@ -10,13 +10,13 @@ li.list-group-item {
     cursor: pointer;
 }
 
-li.selected {
-    background: #237cd4;
-    color: #fff;
-}
-
 li.empty {
     color: #aaa;
+}
+
+.selected {
+    background: #237cd4;
+    color: #fff;
 }
 
 small {

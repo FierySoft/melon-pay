@@ -10,23 +10,32 @@ import { UserAccount, CardHolder, InvoicesReport } from './app.models';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    user: UserAccount;
+    user$: Observable<UserAccount>;
+    users$: Observable<UserAccount[]>;
     invoices$: Observable<InvoicesReport>;
 
-    visible: boolean = false;
-    selectedId: number;
+    walletsVisible: boolean = false;
+    selectedWalletId: number;
 
     constructor(private _api: ApiService) {
-        this._api.whoAmI().subscribe(result => {
-            this.user = result;
-            this.invoices$ = this._api.getInvoicesFor(result.id);
-        });
+        this.changeUser(1); // set default signed-in user
+        this.users$ = this._api.getAllUsers();
+    }
+
+    changeUser = (userId: number): void => {
+        if (!userId) { return; }
+        this.walletsVisible = false;
+        this.selectedWalletId = null;
+        this.user$ = this._api.whoAmI(userId);
+        this.invoices$ = this._api.getInvoicesFor(userId);
     }
 
     selectWallet = (walletId: number): void => {
         if (!walletId) { return; }
-        this.visible = true;
-        this.selectedId = walletId;
-        this.invoices$ = this._api.getInvoicesByWalletId(this.user.cardHolderId, walletId);
+        this.walletsVisible = true;
+        this.selectedWalletId = walletId;
+        this.user$.subscribe(user =>
+            this.invoices$ = this._api.getInvoicesByWalletId(user.cardHolderId, walletId)
+        );
     }
 }

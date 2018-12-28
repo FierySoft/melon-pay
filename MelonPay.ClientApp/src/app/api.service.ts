@@ -16,8 +16,11 @@ export class ApiService {
     }
 
 
-    public whoAmI = (): Observable<UserAccount> =>
-        this._http.get<UserAccount>(`${this._url}/account`)
+    public whoAmI = (id: number = 1): Observable<UserAccount> =>
+        this._http.get<UserAccount>(`${this._url}/account/${id}`)
+
+    public getAllUsers = (): Observable<UserAccount[]> =>
+        this._http.get<UserAccount[]>(`${this._url}/account`)
 
     public getCardHolders = (): Observable<CardHolder[]> =>
         this._http.get<CardHolder[]>(`${this._url}/cardholders`)
