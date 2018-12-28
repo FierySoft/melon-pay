@@ -22,6 +22,7 @@ namespace MelonPay.PersistentDb.DataSources
         {
             return _db.Accounts
                 .AsNoTracking()
+                .Include(x => x.CardHolder)
                 .Where(x => x.IsDeleted == false)
                 .ToArrayAsync();
         }

@@ -5,6 +5,7 @@ namespace MelonPay.Api.Abstractions
 {
     public interface IUserService
     {
-        Task<UserAccount> GetSignedInAsync();
+        Task<UserAccount[]> GetAllAsync();
+        Task<UserAccount> GetSignedInAsync(int id);
     }
 }

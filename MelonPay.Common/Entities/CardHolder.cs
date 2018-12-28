@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace MelonPay.Common.Entities
 {
@@ -13,6 +14,7 @@ namespace MelonPay.Common.Entities
         public IEnumerable<Wallet> Wallets { get; set; }
 
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
+        public string ShortName => $"{LastName} {FirstName?.First()}.{MiddleName?.First()}.";
     }
 
     public enum Gender

@@ -17,9 +17,15 @@ namespace MelonPay.Api.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> WhoAmI()
+        public async Task<IActionResult> Index()
         {
-            return Ok(await _userService.GetSignedInAsync());
+            return Ok(await _userService.GetAllAsync());
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> WhoAmI([FromRoute]int id)
+        {
+            return Ok(await _userService.GetSignedInAsync(id));
         }
     }
 }
